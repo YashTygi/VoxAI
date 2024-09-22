@@ -14,6 +14,7 @@ interface InputForm{
 }
 
 
+
 export default function Home() {
 
   const {setName, name} = useNameStore()
