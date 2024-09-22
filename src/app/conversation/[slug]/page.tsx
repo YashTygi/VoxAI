@@ -30,12 +30,6 @@ const page: FC<pageProps> = ({ params }: { params: { slug: string } }) => {
       const {answer} = useAnswer()
       const links = useAnswer((state) => state.links);
 
-      useEffect(() => {
-        console.log("createMutation data:", data?.answer);
-      }, [isSuccess, data]);
-
-      console.log("hello is this working???", answer, JSON.parse(JSON.stringify(links)))
-
   return (
     <div className={styles.page}>
        <Navbar />

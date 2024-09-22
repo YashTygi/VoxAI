@@ -5,10 +5,13 @@ import styles from "./page.module.css";
 import Navbar from '@/components/Navbar/page';
 import InformationBox from '@/components/InfoBoxes/InformationBox';
 import { generateSlug } from '@/utils/generateSlug';
+import { useNameStore } from "@/store/store";
 
 const page: FC = () => {
     const router = useRouter();
     const [isNavigating, setIsNavigating] = useState(false);
+
+    const { name } = useNameStore();
 
     const handleClick = () => {
         if (isNavigating) return; 
@@ -22,7 +25,7 @@ const page: FC = () => {
         <div className={styles.page}>
             <Navbar />
             <div className={styles.hero_container}>
-                <h1 className={styles.hero_container_header}>Hello, Yash</h1>
+                <h1 className={styles.hero_container_header}>Hello, {name}</h1>
                 <p className={styles.hero_container_text}>Let's start a conversation</p>
                 <div className={styles.hero_box_container}>
                     <InformationBox text={"Our AI strives for accuracy, responses may contains error, verify information before use. We are not responsible for errors."} />

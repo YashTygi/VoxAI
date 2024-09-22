@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAmplitudeStore, useAnswer, useBase64, useRecordState, useTranscriptText } from '@/store/store'
 import debounce from "lodash.debounce";
 import { useAPI } from '@/hooks/useAPI'
-import { JellyfishSpinner } from 'react-spinners-kit'
+import JellyfishSpinner from '@/components/Loader/JellyfishSpinner'
 
 interface micProps {
   slug: string
@@ -61,8 +61,6 @@ const Microphone: FC<micProps> = ({slug}) => {
   //handling Mic and generating slug
   const handleMic = ()  => {
     changeRecord(true);
-    
-    console.log(record)
     }
 
     
@@ -87,10 +85,7 @@ const Microphone: FC<micProps> = ({slug}) => {
             // setAmplitude(new Float32Array(amplitudeArray));
             if (newValue !== tenthAmplitudeValue) {
               setTenthAmplitudeValue(newValue);
-              // console.log("10th Amplitude Value:", newValue);
           }
-            // console.log("amplitudeArray", typeof amplitudeArray, amplitudeArray);
-            // console.log("amplitudeData", amplitudeData);
             requestAnimationFrame(updateAudioData);
           };
 
@@ -114,12 +109,9 @@ const Microphone: FC<micProps> = ({slug}) => {
 
     //speech recognition and transcript
     const handleResult = useCallback((e: any) => {
-      console.log("e", e)
       let transcript = e.results[0][0].transcript;
-      console.log("transcript", transcript);
       setTranscriptText(transcript);
       transcriptRef.current.value = transcript;
-      console.log("transcriptText", transcriptText);
     }, [transcriptText, setTranscriptText]);
 
 
@@ -152,52 +144,6 @@ const Microphone: FC<micProps> = ({slug}) => {
       };
     }, [record, handleResult, handleAudioEnd]);
 
-    //base64
-    useEffect(() => {
-      if (isSuccess){
-        console.log("type", typeof data)
-      }
-    }, [data, isSuccess])
-
-    //audio
-
-    // useEffect(() => {
-    //   // Function to convert base64 to a Blob
-    //   const base64Audio = data?.audio_bytes;
-    //   const base64ToBlob = (base64: string, mimeType: string) => {
-    //     const byteCharacters = atob(base64);
-    //     const byteArrays = [];
-    //     for (let offset = 0; offset < byteCharacters.length; offset += 512) {
-    //       const slice = byteCharacters.slice(offset, offset + 512);
-    //       const byteNumbers = new Array(slice.length);
-    //       for (let i = 0; i < slice.length; i++) {
-    //         byteNumbers[i] = slice.charCodeAt(i);
-    //       }
-    //       const byteArray = new Uint8Array(byteNumbers);
-    //       byteArrays.push(byteArray);
-    //     }
-    //     return new Blob(byteArrays, { type: mimeType });
-    //   };
-  
-    //   if (base64Audio) {
-    //     const mimeType = 'audio/mpeg'; 
-    //     const audioBlob = base64ToBlob(base64Audio, mimeType);
-    //     const audioUrl = URL.createObjectURL(audioBlob);
-    //     setAudioSrc(audioUrl);
-    //   }
-  
-    //   // Cleanup function to revoke the object URL
-    //   return () => {
-    //     if (audioSrc) {
-    //       URL.revokeObjectURL(audioSrc);
-    //     }
-    //   };
-    // }, [isSuccess,data, data?.audio_bytes]);
-
-    
-    // useEffect(() => {
-    //   console.log("createMutation data:", data?.answer);
-    // }, [isSuccess, data]);
 
     useEffect(() => {
       const base64Audio = data?.audio_bytes;
@@ -258,21 +204,23 @@ const Microphone: FC<micProps> = ({slug}) => {
     }, [isSuccess, data, data?.audio_bytes]);
   
     
-  return (
-    <>
-      {!isPending && <Mic onClick={handleMic} className={styles.mic} width={100} height={105} />}
-      <span className={styles.spinner}><JellyfishSpinner color="#8486F3" size={100} loading={isPending} /></span>
-
-      <div>
-      {audioSrc && (
-        <audio id="audio-player" className={styles.audio} autoPlay controls>
-          <source src={audioSrc} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      )}
-    </div>
-    </>
-  )
-}
-
-export default Microphone
+    return (
+      <>
+        {!isPending && <Mic onClick={handleMic} className={styles.mic} width={100} height={105} />}
+        <span className={styles.spinner}>
+          <JellyfishSpinner color="#8486F3" size={100} loading={isPending} />
+        </span>
+  
+        <div>
+        {audioSrc && (
+          <audio id="audio-player" className={styles.audio} autoPlay controls>
+            <source src={audioSrc} type="audio/mpeg" />
+            Your browser does not support the audio element.
+          </audio>
+        )}
+      </div>
+      </>
+    )
+  }
+  
+  export default Microphone
