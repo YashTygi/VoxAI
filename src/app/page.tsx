@@ -1,94 +1,48 @@
+'use client'
 import Image from "next/image";
 import styles from "./page.module.css";
+import dynamic from "next/dynamic";
+import InformationBox from "@/components/InfoBoxes/InformationBox";
+import Navbar from "@/components/Navbar/page";
+import { useState } from "react";
+import { generateSlug } from "@/utils/generateSlug";
+import { useRouter } from "next/navigation";
+import { useNameStore } from "@/store/store";
+
+interface InputForm{
+  userName:  string
+}
+
 
 export default function Home() {
+
+  const {setName, name} = useNameStore()
+  const router = useRouter()
+  
+  const handleSessionGenerator = () => {
+    const uuid = generateSlug()
+    // alert(username + uuid)
+    router.push('/conversation')
+  }
   return (
     <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+      <Navbar />
+      <h1 className={styles.main_heading}>Landing Page is currently <span className={styles.main_heading_effect}>under construction 🏗️</span></h1>
+      <form className={styles.main_form}>
+        <input 
+          className={styles.main_form_input} 
+          type="text" 
+          placeholder="Enter your Username" 
+          value={name}
+          onChange={(e) => {setName(e.target.value)}}
+          required 
+          />
+        <button onClick={handleSessionGenerator} className={styles.main_form_btn}>Start Temporary Session</button>
+      </form>
+      <div className={styles.main_info_box_group}>
+      <InformationBox text={"Welcome to Vox AI! Our full landing page is currently under construction and will be available soon. We're working hard for it."} />
+      <InformationBox text={"You can still try out our voice assistant AI! Generate a temporary ID by clicking the button below. This will give you immediate access to our AI."} />
+      <InformationBox text={"Your temporary ID is valid for one session only. For your privacy and security, we won't save any conversation history after your session ends."} />
       </div>
     </main>
   );

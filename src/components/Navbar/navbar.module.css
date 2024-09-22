@@ -1,0 +1,32 @@
+.nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 2rem 0;
+
+    width: 100%;
+    background-color: transparent;
+
+    z-index: 10;
+}
+
+.logo{
+    font-weight: bold;
+    font-size: 2rem;
+    color: #9b9b9b;
+}
+
+.conversation_btn{
+    width: 13.4375rem;
+
+    border: 2px solid #c0c0c0;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background: transparent;
+
+    color: #c0c0c0;
+    font-size: 1.25rem;
+
+    cursor: pointer;
+}

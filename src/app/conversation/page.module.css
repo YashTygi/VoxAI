@@ -1,0 +1,99 @@
+
+
+.conversation_body{
+    max-height: 100vh;
+}
+
+.page {
+    /* background: linear-gradient(#0A0A0A 0%, #08081F 26%, #0B052F 51%, #0D0240 75%, #11023C 100%); */
+    /* background: linear-gradient(#1a1a1a 0%, #000000 30% 70%, #1a1a1a 100%); */
+    /* background-color: #171717;
+    background: radial-gradient(ellipse at top, #1a1a1a, transparent)
+                radial-gradient(ellipse at bottom, #1a1a1a, transparent);
+                */
+    min-height: 100vh;
+    overflow: hidden;
+
+    padding: 0 3rem 3rem 3rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    --dot-bg: #161616;
+    --dot-color: #848282;
+    --dot-size: 1px;
+    --dot-space: 50px;
+    background:
+      linear-gradient(90deg, var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      linear-gradient(var(--dot-bg) calc(var(--dot-space) - var(--dot-size)), transparent 1%) center / var(--dot-space) var(--dot-space),
+      var(--dot-color);
+}
+
+
+.hero_container{
+    margin-top: 2rem;
+    width: -moz-fit-content;
+    width: fit-content;
+    max-width: 50rem;
+    padding: 0rem 3rem;
+    height: 28rem;
+
+    overflow-y: scroll;
+    background-color: transparent;
+}
+
+.hero_container_header{ 
+    font-size: 4rem;
+    font-weight: 600;
+    font-style: normal;
+    width: -moz-fit-content;
+    width: fit-content;
+
+    background-color: #4158D0;
+
+    /* background-image: linear-gradient(45deg, #FA8BFF 0%, #2BD2FF 52%, #2BFF88 90%); */
+
+    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
+    /* background: linear-gradient(90deg, #6481E9, #8177D2, #9D6FAE, #AF698D, #BF6570, #E26C8F); */
+    /* background: linear-gradient(90deg, rgba(207,144,60,1) 0%, rgba(120,96,49,1) 21%, rgba(38,113,228,1) 42%, rgba(108,63,215,1) 65%, rgba(51,133,149,1) 94%); */
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.hero_box_container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    margin-top: 1rem;
+    background-color: transparent;
+}
+
+.hero_container_text{
+    font-size: 2.5rem;
+    font-weight: 400;
+    font-style: normal;
+
+    color: #9b9b9b;
+    background-color: transparent;
+}
+
+.conversation_btn{
+    width: 13.4375rem;
+    margin-top: 3rem;
+
+    border: 2px solid #c0c0c0;
+    border-radius: 0.5rem;
+    padding: 0.75rem;
+    background: transparent;
+
+    color: #c0c0c0;
+    font-size: 1.25rem;
+
+    cursor: pointer;
+}
+
+

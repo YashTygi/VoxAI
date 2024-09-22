@@ -1,0 +1,18 @@
+.mic,
+.spinner{
+    cursor: pointer;
+    margin-top: 5rem;
+
+    z-index: 10;
+}
+
+.audio{
+    display: none;
+}
+
+.audioBtn{
+    z-index: 10;
+    cursor: pointer;
+
+    border: 1px solid white;
+}
