@@ -7,7 +7,7 @@ import InformationBox from '@/components/InfoBoxes/InformationBox';
 import { generateSlug } from '@/utils/generateSlug';
 import { useNameStore } from "@/store/store";
 
-const page: FC = () => {
+const Page: FC = () => {
     const router = useRouter();
     const [isNavigating, setIsNavigating] = useState(false);
 
@@ -26,11 +26,11 @@ const page: FC = () => {
             <Navbar />
             <div className={styles.hero_container}>
                 <h1 className={styles.hero_container_header}>Hello, {name}</h1>
-                <p className={styles.hero_container_text}>Let's start a conversation</p>
+                <p className={styles.hero_container_text}>Let&apos;s start a conversation</p>
                 <div className={styles.hero_box_container}>
-                    <InformationBox text={"Our AI strives for accuracy, responses may contains error, verify information before use. We are not responsible for errors."} />
+                    <InformationBox text={"Our AI strives for accuracy, responses may contain errors, verify information before use. We are not responsible for errors."} />
                     <InformationBox text={"Interact with our advanced AI assistant using voice commands or by uploading images for instant analysis and detailed insights."} />
-                    <InformationBox text={"It might take some time to process your first request as it takes some time to active the deployed backend."} />
+                    <InformationBox text={"It might take some time to process your first request as it takes some time to activate the deployed backend."} />
                 </div>
             </div>
             <button 
@@ -45,4 +45,4 @@ const page: FC = () => {
     )
 }
 
-export default page;
+export default Page;

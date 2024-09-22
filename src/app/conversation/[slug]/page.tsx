@@ -8,40 +8,35 @@ import { useAnswer, useRecordState, useTranscriptText } from '@/store/store'
 import { useAPI } from '@/hooks/useAPI'
 import DragnDrop from '@/components/DragnDrop/page'
 
-
-
-
-interface pageProps {
+interface PageProps {
   params: {
     slug: string;
   };
 }
 
-const page: FC<pageProps> = ({ params }: { params: { slug: string } }) => {
+const Page: FC<PageProps> = ({ params }) => {
+  const ThreeScene = dynamic(() => import("@/components/model/page"), {
+    ssr: false,
+  })
 
-      const ThreeScene = dynamic(() => import("@/components/model/page"), {
-        ssr: false,
-      })
-
-
-      const {record} = useRecordState()
-      const {transcriptText} = useTranscriptText()
-      const {isPending, isSuccess, data} = useAPI()
-      const {answer} = useAnswer()
-      const links = useAnswer((state) => state.links);
+  const { record } = useRecordState()
+  const { transcriptText } = useTranscriptText()
+  const { isPending, isSuccess, data } = useAPI()
+  const { answer } = useAnswer()
+  const links = useAnswer((state) => state.links);
 
   return (
     <div className={styles.page}>
-       <Navbar />
-       <div className={styles.hero_container}>
-          <p className={styles.hero_container_text}>{transcriptText}</p>
-          <p className={styles.hero_container_response}>{answer || "What can I help you with ?"}</p>
-          {!record && !isPending && <div className={styles.hero_box_container} > <DragnDrop /> </div>}
-       </div>
-       <ThreeScene />
-       <Microphone slug={params.slug} />
+      <Navbar />
+      <div className={styles.hero_container}>
+        <p className={styles.hero_container_text}>{transcriptText}</p>
+        <p className={styles.hero_container_response}>{answer || "What can I help you with ?"}</p>
+        {!record && !isPending && <div className={styles.hero_box_container}> <DragnDrop /> </div>}
+      </div>
+      <ThreeScene />
+      <Microphone slug={params.slug} />
     </div>
   )
 }
 
-export default page
+export default Page

@@ -8,8 +8,8 @@ export const metadata: Metadata = {
     icon: "/favicon.ico",
   },
   openGraph: {
-    title: "VoxyAI",
-    description: "VoxyAI",
+    title: "Vox AI",
+    description: "Vox AI",
     images: "/opengraph-image.png", // Update path if necessary
   },
   twitter: {
