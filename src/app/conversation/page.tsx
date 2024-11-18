@@ -7,7 +7,7 @@ import InformationBox from '@/components/InfoBoxes/InformationBox'
 import { generateSlug } from '@/utils/generateSlug'
 import { useStore } from "@/store/store"
 
-const page: FC = () => {
+const ConversationPage: FC = () => {
   const router = useRouter()
   const [isNavigating, setIsNavigating] = useState(false)
   
@@ -56,4 +56,4 @@ const page: FC = () => {
   )
 }
 
-export default page
+export default ConversationPage

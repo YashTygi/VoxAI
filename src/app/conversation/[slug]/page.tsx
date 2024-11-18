@@ -14,16 +14,14 @@ interface PageProps {
   };
 }
 
-const page: FC<PageProps> = ({ params }) => {
+const ConversationSlugPage: FC<PageProps> = ({ params }) => {
   const ThreeScene = dynamic(() => import("@/components/model/page"), {
     ssr: false,
   })
 
-  // Use specific selectors for better performance
   const record = useStore(state => state.record)
   const transcriptText = useStore(state => state.transcriptText)
   const answer = useStore(state => state.answer)
-  const links = useStore(state => state.links)
   
   const { isPending, isSuccess, data } = useAPI()
 
@@ -55,4 +53,4 @@ const page: FC<PageProps> = ({ params }) => {
   )
 }
 
-export default page
+export default ConversationSlugPage
