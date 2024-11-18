@@ -1,39 +1,58 @@
-"use client"
-import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
-import { useBase64, useAnswer } from "@/store/store";
+import { useMutation } from '@tanstack/react-query';
+import { useStore } from '@/store/store';
 
-interface PostDataResponse {
-  answer: string;
-  audio_bytes: string;
-  links: any;
+let worker: Worker | null = null;
+
+if (typeof window !== 'undefined') {
+  worker = new Worker(new URL('../utils/apiWorker.ts', import.meta.url));
 }
 
-const postData = async (data: { question: string, user_id: string, conversation_id: string, image: string }) => {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
-  if (!apiUrl) {
-    throw new Error('NEXT_PUBLIC_API_URL environment variable is not set');
-  }
-  
-  const response = await axios.post<PostDataResponse>(apiUrl, data);
-  return response.data;
-};
+interface PostDataParams {
+  question: string;
+  user_id: string;
+  conversation_id: string;
+  image: string;
+}
 
 export const useAPI = () => {
-  const {base64, setBase64} = useBase64();
-  const {setAnswer, setLinks} = useAnswer();
+  const { setAnswer, setLinks } = useStore();
 
-  const createMutation = useMutation({
-    mutationFn: postData,
-    onSuccess: (data) => {
-      setAnswer(data?.answer);
-      setLinks(data?.links);
+  return useMutation({
+    mutationFn: async (data: PostDataParams) => {
+      return new Promise((resolve, reject) => {
+        if (!worker) {
+          reject(new Error('Web Worker not available'));
+          return;
+        }
+
+        const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+        if (!apiUrl) {
+          reject(new Error('NEXT_PUBLIC_API_URL environment variable is not set'));
+          return;
+        }
+
+        worker.onmessage = (event) => {
+          if (event.data.type === 'API_SUCCESS') {
+            resolve(event.data.payload);
+          } else if (event.data.type === 'API_ERROR') {
+            reject(new Error(event.data.payload));
+          }
+        };
+
+        worker.postMessage({
+          type: 'API_REQUEST',
+          payload: data,
+          apiUrl,
+        });
+      });
+    },
+    onSuccess: (data: any) => {
+      setAnswer(data.answer ?? '');
+      setLinks(data.links ?? []);
       return data;
     },
     onError: (error) => {
-      console.error("Error:", error);
-    }
+      console.error('API Error:', error);
+    },
   });
-
-  return createMutation;
 };

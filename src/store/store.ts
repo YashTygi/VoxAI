@@ -1,94 +1,51 @@
-import { create } from 'zustand'
+import { create } from 'zustand';
+import { devtools } from 'zustand/middleware';
 
-type RecordStore = {
-    record: boolean,
-    changeRecord: (record: boolean) => void
+interface State {
+  record: boolean;
+  name: string;
+  transcriptText: string;
+  base64: string;
+  answer: string;
+  links: any[];
+  imageBase64: string;
+  tenthAmplitudeValue: number;
 }
 
-type NameStore = {
-    name: string,
-    setName: (name: string) => void
+interface Actions {
+  setRecord: (value: boolean) => void;
+  setName: (value: string) => void;
+  setTranscriptText: (value: string) => void;
+  setBase64: (value: string) => void;
+  setAnswer: (value: string) => void;
+  setLinks: (value: any[]) => void;
+  setImageBase64: (value: string) => void;
+  setTenthAmplitudeValue: (value: number) => void;
+  reset: () => void;
 }
 
+const initialState: State = {
+  record: false,
+  name: '',
+  transcriptText: '',
+  base64: '',
+  answer: '',
+  links: [],
+  imageBase64: '',
+  tenthAmplitudeValue: 0,
+};
 
-
-type TranscriptStore = {
-    transcriptText: string,
-    setTranscriptText: (transcriptText: string) => void
-}
-
-type Base64Store = {
-    base64: string,
-    setBase64: (base64: string) => void
-}
-
-type AnswerStore = {
-    answer: string,
-    setAnswer: (answer: string) => void,
-    links: [], // Assuming links are strings, adjust type as needed
-    setLinks: (links: []) => void
-}
-
-type ImageBase64Store = {
-    imageBase64: string,
-    setImageBase64: (imageBase64: string) => void
-}
-
-type AmplitudeStore = {
-    tenthAmplitudeValue: number,
-    setTenthAmplitudeValue: (amplitude: number) => void
-}
-
-
-export const useNameStore = create<NameStore>((set) => ({
-    name: '',
-    setName: (newName) => {
-        set({ name: newName })
-    }
-}))
-
-export const useAmplitudeStore = create<AmplitudeStore>((set) => ({
-    tenthAmplitudeValue: 0,
-    setTenthAmplitudeValue: (newAmplitude) => {
-        set({ tenthAmplitudeValue: newAmplitude })
-    }
-}))
-
-export const useRecordState = create<RecordStore>((set) => ({
-    record: false,
-    changeRecord: (newRecord) => {
-        set({ record: newRecord })
-    }
-}))
-
-
-
-export const useTranscriptText = create<TranscriptStore>((set) => ({
-    transcriptText: '',
-    setTranscriptText: (newTranscriptText) => {
-        set({ transcriptText: newTranscriptText });
-    }
-}))
-
-export const useBase64 = create<Base64Store>((set) => ({
-    base64: '',
-    setBase64: (newBase64: string) => {
-        set({ base64: newBase64 });
-    }
-}))
-
-export const useImageBase64 = create<ImageBase64Store>((set) => ({
-    imageBase64: '',
-    setImageBase64: (newImageBase64: string) => {
-        set({ imageBase64: newImageBase64 });
-    }
-}))
-
-export const useAnswer = create<AnswerStore>((set) => ({
-    answer: '',
-    setAnswer: (newAnswer: string) => {
-        set({ answer: newAnswer });
-    },
-    links: [],
-    setLinks: (links) => set({ links }),
-}))
+export const useStore = create<State & Actions>()(
+  devtools((set) => ({
+    ...initialState,
+    setRecord: (value) => set({ record: value }),
+    setName: (value) => set({ name: value }),
+    setTranscriptText: (value) => set({ transcriptText: value }),
+    setBase64: (value) => set({ base64: value }),
+    setAnswer: (value) => set({ answer: value }),
+    setLinks: (value) => set({ links: value }),
+    setImageBase64: (value) => set({ imageBase64: value }),
+    setTenthAmplitudeValue: (value) => set({ tenthAmplitudeValue: value }),
+    reset: () => set(initialState),
+  }))
+);

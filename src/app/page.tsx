@@ -7,10 +7,10 @@ import Navbar from "@/components/Navbar/page";
 import { useState, useEffect } from "react";
 import { generateSlug } from "@/utils/generateSlug";
 import { useRouter } from "next/navigation";
-import { useNameStore } from "@/store/store";
+import { useStore } from "@/store/store";
 
 export default function Home() {
-  const { setName, name } = useNameStore()
+  const { name, setName } = useStore()
   const router = useRouter()
   const [localName, setLocalName] = useState("")
   

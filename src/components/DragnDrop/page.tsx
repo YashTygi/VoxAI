@@ -4,7 +4,7 @@ import { useDropzone } from 'react-dropzone'
 import styles from './dragndrop.module.css'
 import DropPhoto from '@/assets/icons/DropPhoto'
 import Image from 'next/image'
-import { useAnswer } from '@/store/store'
+import { useStore } from '@/store/store'
 
 /**
  * Renders a drag and drop component that allows users to upload images.
@@ -16,7 +16,7 @@ function DragnDrop() {
     const [path, setPath] = useState("");
     const [base64, setBase64] = useState<string>("");
     const [file, setFile] = useState<File | null>(null);
-    const { answer } = useAnswer()
+    const { answer } = useStore()
 
     const onDrop = useCallback((acceptedFiles: File[]) => {
         const file = acceptedFiles[0];
