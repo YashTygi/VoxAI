@@ -15,7 +15,7 @@ export default function Home() {
   const [localName, setLocalName] = useState("")
   
   useEffect(() => {
-    if (name) {
+    if (name)  {
       setLocalName(name)
 
     }
